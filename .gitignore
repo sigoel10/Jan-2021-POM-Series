@@ -13,7 +13,6 @@ test-output/
 *.ear
 *.nar
 hs_err_pid*
-
 ##############################
 ## Maven
 ##############################
@@ -29,6 +28,15 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+##############################
+## IntelliJ
+##############################
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
 ##############################
 ## Eclipse
 ##############################
@@ -46,7 +54,6 @@ local.properties
 .loadpath
 .factorypath
 
-##############################
 ## OS X
 ##############################
 .DS_Store
