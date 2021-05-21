@@ -23,7 +23,7 @@ public class LoginPageTest extends BaseTest {
 
 	@Description ("Login Page Title Test")
 	@Severity (SeverityLevel.NORMAL)
-	@Test(priority = 1)
+	@Test(priority = 1, enabled = false)
 	public void loginPageTitleTest() {
 		String title = loginPage.getLoginPageTitle();
 		System.out.println("login page title is: " + title);
@@ -32,7 +32,7 @@ public class LoginPageTest extends BaseTest {
 	
 	@Description ("Login Page URL Test")
 	@Severity (SeverityLevel.MINOR)
-	@Test(priority = 2, enabled = true)//this test will no participate in execution
+	@Test(priority = 2, enabled = false)//this test will no participate in execution
 	public void loginPageUrlTest() {
 		String url = loginPage.getLoginPageUrl();
 		Assert.assertTrue(url.contains(Constants.LOGIN_URL_VALUE));
@@ -40,7 +40,7 @@ public class LoginPageTest extends BaseTest {
 
 	@Description ("Login Page forgot PWD link Test")
 	@Severity (SeverityLevel.CRITICAL)
-	@Test(priority = 3)
+	@Test(priority = 3, enabled = false)
 	public void forgotPwdLinkTest() {
 		Assert.assertTrue(loginPage.isForgotPwdLinkExist());
 	}
@@ -52,17 +52,17 @@ public class LoginPageTest extends BaseTest {
 		loginPage.doLogin(prop.getProperty("username"),prop.getProperty("password"));
 	}
 	
-	@Test (priority = 4)
+	@Test (priority = 4, enabled = false)
 	public void newCustomerContinueTest() {
 		Assert.assertTrue(loginPage.isNewCustContinueLinkExist());
 	}
 	
-	@Test(priority = 5)
+	@Test(priority = 5, enabled = false)
 	public void returningCustomerLabelTest() {
 		Assert.assertTrue(loginPage.isReturningCustlabelExist());
 	}
 	
-	@Test (priority = 6)
+	@Test (priority = 6, enabled = false)
 	public void rightLoginListTest() {
 		List<String> loginList = loginPage.rightSideLoginList();
 		loginList.stream().forEach(e -> System.out.println(e));
@@ -83,7 +83,7 @@ public class LoginPageTest extends BaseTest {
 	
 	@Description ("Login Negative Test")
 	@Severity (SeverityLevel.CRITICAL)
-	@Test(priority = 0, dataProvider = "loginNegativeData")
+	@Test(priority = 0, dataProvider = "loginNegativeData", enabled = false)
 	public void loginNegativeTest(String un, String pwd) {
 		loginPage.doLoginWithWrongData(un, pwd);
 	}
