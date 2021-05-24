@@ -1,47 +1,48 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Build the Project'
-            }
-        }
-        
-        stage('Deploy on DEV') {
-            steps {
-                echo 'DEV Deploy'
-            }
-        }
-        
-        stage('Deploy on QA') {
-            steps {
-                echo 'QA Deploy'
-            }
-        }
-        
-        stage('Smoke Test') {
-            steps {
-                echo 'Smoke Test'
-            }
-        }
-        
-         stage('Regression Test') {
-            steps {
-                echo 'Regression Test'
-            }
-        }
-        
-        stage('Deploy on Stage') {
-            steps {
-                echo 'Stage Deploy'
-            }
-        }
-        
-        stage('Deploy on Prod') {
-            steps {
-                echo 'Stage PROD'
-            }
-        }
-    }
-}
+pipeline{
+agent any
+	stages {
+	
+		stage ('Build') {
+			steps{
+				echo "Building"
+				}
+			}
+			
+		stage ('Test') {
+			steps {
+				catchError{buildResult:'SUCCESS', stageResult: 'FAILURE'}{
+					bat "mvn clean install"
+					}
+				}
+			}
+		
+		stage('Publish Allure Reports'){
+			steps {
+				script {
+					allure([
+						includeProperties: false,
+						jdk: '',
+						properties: [],
+						reportBuildPolicy: 'ALWAYS',
+						results: [[path: '/allure-results']]
+					])
+				}
+			}
+		}
+		
+		stage('Publish Extent Report'){
+			steps {
+					publishHTML([allowMissing: false,
+						alwaysLinkToLastBuild: false,
+						keepAll: false,
+						reportDir: 'build,
+						reportFiles: 'TestExecutionReport.html',
+						reportName: 'HTML Extent Report',
+						reportTitles: ''])
+				}
+			}
+			
+		}
+	}
+		
+		
